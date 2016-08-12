@@ -1,0 +1,17 @@
+{
+  "name": "kafka-tweet-consumer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "bin/start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Chris Castle",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "no-kafka": "git+ssh://git@github.com/crcastle/kafka.git#3.0"
+  }
+}
