@@ -19,4 +19,18 @@ Additionally these environment variables need to be defined:
 ```shell
 npm start
 ```
-Watch tweets stream into your console...
+
+Open http://localhost:3000 in a browser and watch tweets stream in...
+
+#### Deploy
+```shell
+git clone git@github.com:crcastle/kafka-tweet-consumer.git
+cd kafka-tweet-consumer
+heroku create
+```
+You can define the below environment variables manually, or you can run this command to define them from another app that already has a Kafka cluster attached: `heroku addons:attach my-originating-app::KAFKA` (where "my-originating-app" is the app to which the cluster is already attached)
+```
+heroku config:set KAFKA_URL=
+heroku config:set KAFKA_CLIENT_CERT=
+heroku config:set KAFKA_CLIENT_CERT_KEY=
+```
