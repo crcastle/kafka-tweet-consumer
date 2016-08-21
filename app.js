@@ -8,23 +8,6 @@ var routes = require('./routes');
 const Kafka = require('no-kafka');
 
 /*
- * Get broker URLs and replace 'kafka+ssl://blah.com:9092'
- * URL format with 'kafka://blah.com:9092'
- *
- */
-const brokerUrls = process.env.KAFKA_URL.replace(/\+ssl/g,'');
-
-const consumer = new Kafka.SimpleConsumer({
-  idleTimeout: 100,
-  clientId: 'simple-consumer',
-  connectionString: brokerUrls,
-  ssl: {
-    certFile: './client.crt',
-    keyFile: './client.key'
-  }
-});
-
-/*
  * Configure web app pieces
  *
  */
@@ -57,7 +40,7 @@ wss.on('connection', function connection(ws) {
 });
 
 /*
- * Send messages received from Kafka out over WebSocket
+ * Send messages received from Kafka consumer out over WebSocket
  *
  */
 wss.broadcast = function broadcast(data) {
@@ -71,6 +54,22 @@ const dataHandler = function (messageSet, topic, partition) {
     wss.broadcast(m.message.value.toString('utf8'));
   });
 };
+
+/*
+ * Configure Kafka consumer
+ *
+ */
+// replace 'kafka+ssl://blah.com:9092' URL format with 'kafka://blah.com:9092'
+const brokerUrls = process.env.KAFKA_URL.replace(/\+ssl/g,'');
+const consumer = new Kafka.SimpleConsumer({
+  idleTimeout: 100,
+  clientId: 'simple-consumer',
+  connectionString: brokerUrls,
+  ssl: {
+    certFile: './client.crt',
+    keyFile: './client.key'
+  }
+});
 
 return consumer.init().then(function () {
   // Subscribe partiton 0 in a topic:
