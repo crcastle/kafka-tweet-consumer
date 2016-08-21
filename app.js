@@ -7,8 +7,11 @@ var routes = require('./routes');
 
 const Kafka = require('no-kafka');
 
-// Get broker URLs and replace 'kafka+ssl://blah.com:9092' 
-// URL format with 'kafka://blah.com:9092'
+/*
+ * Get broker URLs and replace 'kafka+ssl://blah.com:9092'
+ * URL format with 'kafka://blah.com:9092'
+ *
+ */
 const brokerUrls = process.env.KAFKA_URL.replace(/\+ssl/g,'');
 
 const consumer = new Kafka.SimpleConsumer({
@@ -21,18 +24,23 @@ const consumer = new Kafka.SimpleConsumer({
   }
 });
 
+/*
+ * Configure web app pieces
+ *
+ */
 app.set('views', './views');
 app.set('view engine', 'pug');
-
 app.get('/', routes.index);
-
 const port = process.env.PORT || 3000;
-
 server.on('request', app);
 server.listen(port, function() {
   console.log(`http/ws server listening on ${port}`);
 });
 
+/*
+ * Configure WebSocketServer
+ *
+ */
 var wss = new WebSocketServer({ server: server });
 wss.on('connection', function connection(ws) {
   ws.on('open', function() {
@@ -48,16 +56,18 @@ wss.on('connection', function connection(ws) {
   // or ws.upgradeReq.headers.cookie (see http://stackoverflow.com/a/16395220/151312)
 });
 
+/*
+ * Send messages received from Kafka out over WebSocket
+ *
+ */
 wss.broadcast = function broadcast(data) {
   wss.clients.forEach(function each(client) {
     client.send(data);
   });
 };
 
-// data handler function can return a Promise
 const dataHandler = function (messageSet, topic, partition) {
   messageSet.forEach(function (m) {
-    // console.log(topic, partition, m.offset, m.message.value.toString('utf8'));
     wss.broadcast(m.message.value.toString('utf8'));
   });
 };
