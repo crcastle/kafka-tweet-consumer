@@ -18,9 +18,7 @@
       "quantity": 1
     }
   },
-  "addons": [
-    "heroku-kafka"
-  ],
+  "addons": [],
   "buildpacks": [
     {
       "url": "heroku/nodejs"
