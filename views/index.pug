@@ -1,35 +1,22 @@
 html
   head
     title= title
-    script(src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous")
-    script.
-      var ws = new WebSocket('wss://' + window.document.location.host);
-      ws.onmessage = function(event) {
-        var newTweet = document.createElement('p');
-        newTweet.appendChild(document.createTextNode(event.data));
-
-        $(newTweet).prependTo('#tweets').hide().slideDown();
-
-        var tweetCount = $('#tweets').childElementCount;
-        if (tweetCount > 100) {
-          $('#tweets').children('p:last').remove();
-        }
-
-        /*var container = document.getElementById('tweets');
-        container.insertBefore(newTweet, container.firstChild);*/
-        /*console.log(event);*/
-      };
-    style(type='text/css').
+    link(rel="shortcut icon" type="image/x-icon" href="https://d3k90kvix375hb.cloudfront.net/assets/favicon.ico")
+    style(type="text/css").
       body {
         font-family: sans-serif;
         background-color: #eee;
+        text-align: center;
       }
-      h1 {
-        color: #211746;
-      }
-      p {
-        color: #4A90E2;
-      }
+      h1 { color: #211746; }
+      p { color: #4A90E2; }
+      ul { list-style-type: none; }
+      li { font-size: 2em; }
+      a { text-decoration: none; }
+      a:hover { text-decoration: underline; }
   body
-    h1= message
-    #tweets
+    ul
+      li
+        a(href='/waterfall') Tweet Waterfall
+      li
+        a(href='/bubbles') Tweet Bubble Chart

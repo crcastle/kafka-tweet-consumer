@@ -1,0 +1,72 @@
+html
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    link(rel="shortcut icon" type="image/x-icon" href="https://d3k90kvix375hb.cloudfront.net/assets/favicon.ico")
+    title= title
+    meta(name="description" content="")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    style.
+      body {
+        font-family: sans-serif;
+        background-color: #eee;
+      }
+
+      #left {
+        width: 60%;
+        float: left;
+      }
+
+      g path.domain {
+        width: 1;
+        stroke: black;
+        fill: none;
+      }
+
+      #right {
+        width: 30%;
+        float: right;
+      }
+
+      #dashboard {
+        text-align: center;
+        border: 1px solid #ccc;
+      }
+
+      h1 { color: #211746; }
+      p { color: #4A90E2; }
+  body
+    h1= title
+    h2 Twitter Stream API: Tech Keywords
+    #left
+      svg
+      #ideas
+        br
+        hr(style="color: black;")
+        h3 Other Visualization Ideas / Examples
+        ul
+          li
+            a(href="https://www.jasondavies.com/wordcloud/") Word cloud
+          li
+            a(href="https://bl.ocks.org/mbostock/4060954") Streamgraph
+          li Map (with bubbles representing tweets or a heatmap)
+          li
+            a(href="https://bost.ocks.org/mike/nations/") Another bubble chart
+          li
+            a(href="https://github.com/d3/d3/wiki/Gallery") D3 examples for inspiration
+          li
+            a(href="https://github.com/vega/vega/wiki/Gallery") Vega examples for inspiration
+          li
+            a(href="https://www.madewithtea.com/processing-tweets-with-kafka-streams.html") Blog post: Processing Tweets with Kafka Streams
+    #right
+      #dashboard
+        h1
+          span#rate 0
+          span(style="font-size: 0.7em; color: #888;")  messages / second
+      #tweets
+
+    script(src="//code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous")
+    script(src="/js/lodash-min.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/bacon.js/0.7.85/Bacon.min.js")
+    script(src="//d3js.org/d3.v3.min.js")
+    script(src="/js/index.js")

@@ -1,0 +1,34 @@
+html
+  head
+    title= title
+    link(rel="shortcut icon" type="image/x-icon" href="https://d3k90kvix375hb.cloudfront.net/assets/favicon.ico")
+    script(src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous")
+    script.
+      var wsUrl = 'ws' + window.location.href.match(/^http(s?:\/\/.*)\/.*$/)[1];
+      var ws = new WebSocket(wsUrl);
+      ws.onmessage = function(event) {
+        var tweet = JSON.parse(event.data);
+        var newTweet = document.createElement('p');
+        newTweet.appendChild(document.createTextNode('@' + tweet.user.screenName + ': ' + tweet.text));
+
+        $(newTweet).prependTo('#tweets').hide().slideDown();
+
+        var tweetCount = $('#tweets').childElementCount;
+        if (tweetCount > 100) {
+          $('#tweets').children('p:last').remove();
+        }
+
+        /*var container = document.getElementById('tweets');
+        container.insertBefore(newTweet, container.firstChild);*/
+        /*console.log(event);*/
+      };
+    style(type='text/css').
+      body {
+        font-family: sans-serif;
+        background-color: #eee;
+      }
+      h1 { color: #211746; }
+      p { color: #4A90E2; }
+  body
+    h1= message
+    #tweets
