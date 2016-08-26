@@ -11,9 +11,12 @@ const Kafka = require('no-kafka');
  * Configure web app pieces
  *
  */
+app.use(express.static(__dirname + '/public'));
 app.set('views', './views');
 app.set('view engine', 'pug');
 app.get('/', routes.index);
+app.get('/waterfall', routes.waterfall);
+app.get('/bubbles', routes.bubbles);
 const port = process.env.PORT || 3000;
 server.on('request', app);
 server.listen(port, function() {
@@ -73,5 +76,5 @@ const consumer = new Kafka.SimpleConsumer({
 
 return consumer.init().then(function () {
   // Subscribe partiton 0 in a topic:
-  return consumer.subscribe('test', [0], dataHandler);
+  return consumer.subscribe('cleaned', [0], dataHandler);
 });
